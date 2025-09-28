@@ -1,8 +1,7 @@
 function eyeTrackerInteractiveLite(pathIn)
 % eyeTrackerInteractiveLite  Interactive pupil/iris circle detection.
 % Works with a video file OR a folder of images.
-%
-% AUTO-SESSION MODE (the part you asked for):
+% AUTO-SESSION MODE:
 % If pathIn is a VIDEO file, this program will FIRST create a session folder
 % (under ./eye_sessions/<videoName>_<timestamp>/), then EXTRACT FRAMES at a
 % stride of 15 (i.e., keep 1 of every 15 frames) up to a MAX of 25 frames,
@@ -37,11 +36,10 @@ function eyeTrackerInteractiveLite(pathIn)
     end
     % =================================================================
 
-    % ---- reader (abstracts folder vs video) ----
+   
     R = makeReader(pathIn);
     if R.nFrames==0, errordlg('No frames found.'); return; end
 
-    % ---- state ----
     S.R = R; S.pathIn = pathIn;
     S.frameIdx = 1; S.playing = true;
     S.sens = 0.85; S.edgeThr = 0.10;
@@ -49,7 +47,7 @@ function eyeTrackerInteractiveLite(pathIn)
     S.polarity = 'dark'; S.metricThr = 0.25;
     S.minCenterDist = 15;
 
-    % ---- figure / UI ----
+    
     S.hFig = figure('Name','Eye Tracker (Lite)','NumberTitle','off', ...
         'Color','k','Units','normalized','Position',[0.1 0.1 0.8 0.8], ...
         'KeyPressFcn',@(src,evt) onKey(src,evt), ...
@@ -284,3 +282,4 @@ function sessionDir = autoMakeSessionFromVideo(videoPath, baseOutDir, stride, ma
 end
 
 end
+
